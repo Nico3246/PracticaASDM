@@ -46,44 +46,6 @@ public class Práctica_2025_26 {
         personajes.agregar(yennefer);
         personajes.agregar(solomon);
 
-        System.out.println("ACLARACIONES\n"
-                + "Esta práctica esta pensada para ir añadiendo patrones de diseño "
-                + "sobre una simulación de un video juego, cada opción del"
-                + " menú principal está pensada para añadir un patrón de diseño"
-                + " y solo uno\n"
-                + "Por tanto, debemos ir realizando las opciones de cada menú e"
-                + " ignorando las que están etiquetadas como (futuras)\n"
-                + "\nPulsa para continuar");
-        scanner2.nextLine();
-        System.out.println("El programa principal no es definitivo se irá ampliando"
-                + " durante la práctica\n"
-                + "\nPulsa para continuar");
-        scanner2.nextLine();
-
-        System.out.println("ACLARACIONES\n"
-                + "Los requisitos de cada opción se explican en el propio menú "
-                + " y el patrón a utilizar"
-                + "\nPulsa para continuar");
-        scanner2.nextLine();
-
-        System.out.println("ACLARACIONES\n"
-                + "Por simplicidad se han añadido algunos personajes que se incluyen en la lista, dicha lista se puede "
-                + " modificar y añadir nuevos personajes\n, o cambiar su declaración como se estime oportuno"
-                + "\nPulsa para continuar");
-        scanner2.nextLine();
-
-        System.out.println("ACLARACIONES\n"
-                + "Se puede modificar el código y añadir clases con el objetivo "
-                + "de usar los patrones de diseño.\n"
-                + "Sería de agradecer que pusieráis comentarios y aclaraciones "
-                + "escritas de los patrones que utilizáis en cada opción"
-                + "\nPulsa para continuar");
-
-        scanner2.nextLine();
-
-        for (int i = 0; i < 50; ++i) {
-            System.out.println();
-        }
 
         do {
             for (int i = 0; i < 50; ++i) {
@@ -119,10 +81,13 @@ public class Práctica_2025_26 {
                     scanner2.nextLine();
                     break;
 
+                    
+                /*Patron utilizado: Prototype
+                 * El usuario selecciona un personaje ya creado y el sistema genera una copia
+                 * de ese objeto mediante el metodo clonar()
+                 */
                 case 2:
-                    System.out.println("Clonaremos un personaje ya creado "
-                            + " modificando los datos que sean necesarios "
-                            + "y se añadirá a la lista");
+                    ClonarPersonaje(scanner, scanner2, personajes);
                     System.out.println("Presiona para continuar");
                     scanner2.nextLine();
                     break;
@@ -235,5 +200,66 @@ public class Práctica_2025_26 {
         System.out.println("Se ha creado un nuevo personaje: " + nombre);
         personajes.recorrer();
 
+    }
+    
+    
+    public static void ClonarPersonaje(Scanner scanner, Scanner scanner2, I_Agregado_Personajes personajes)
+    {
+   
+        System.out.println("PERSONAJES");
+        personajes.recorrer();
+        System.out.println();
+        
+        System.out.print("Introduzca el nombre del personaje que desea clonar: ");
+        String nombre = scanner2.nextLine();
+  
+        Personaje original = personajes.existePersonaje(nombre);
+        
+        if(original==null)
+        {
+            System.out.println("El eprsonaje no existe");
+            return;
+        }
+        
+        System.out.print("Cuantos clones desea crear?: ");
+        int n=scanner.nextInt();
+        
+        System.out.println("Desea modificar el clon? S/N");
+        String opc = scanner2.nextLine();
+        
+        for(int i=0; i<n;i++)
+        {
+            Personaje clon = original.clonar();//se genera un nuevo personaje copiando el estado del objeto original
+                                               // el clon conserva el mismo tipo y atributos iniciales que el personaje seleccionado
+            
+            if(opc.equalsIgnoreCase("S"))
+            {
+                System.out.print("Introduce el nombre: ");
+                String nombreP = scanner2.nextLine();
+                clon.setNombre(nombreP);
+
+                System.out.print("Introduce el nivel: ");
+                int nivel = scanner.nextInt();
+                clon.setNivel(nivel);
+
+                System.out.print("Introduce las armas: ");
+                String armas = scanner2.nextLine();
+                clon.setArmas(armas);
+
+                System.out.print("Introduce el precio: ");
+                double precio = scanner.nextInt();
+                clon.setPrecio(precio);
+
+                System.out.println("Introduce el nivel de habilidad: ");
+                int hab = scanner.nextInt();   
+                clon.sethab(hab);    
+               
+            }
+            
+            personajes.agregar(clon);//se añade el clon modificado a la lista de personajes
+        }
+        
+
+        System.out.println("Se han creado " + n + " clones");  
     }
 }

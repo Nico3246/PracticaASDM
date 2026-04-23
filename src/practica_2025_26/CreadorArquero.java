@@ -12,7 +12,11 @@ public class CreadorArquero extends Creador{
     private String armas;
     private double precio;
     
+    private boolean creado;
+    
     private Agregado_Personajes a;
+    private Personaje p;
+    
     
     public CreadorArquero (String n, int p)
     {
@@ -31,7 +35,8 @@ public class CreadorArquero extends Creador{
     
     @Override
     public Personaje factory_Method()
-    {
+    {   
         return new Arquero(nombre, punteria, nivel, armas, precio);
+        
     }
 }

@@ -19,5 +19,18 @@ public class Agregado_Personajes implements I_Agregado_Personajes{
         for(int i=0;i<personajes.size();i++)
             System.out.println(personajes.get(i).getNombre());
     }
+
+    @Override
+    public Personaje existePersonaje(String nombre) {
+        
+        for(Personaje aux :personajes)
+        {
+            if(aux.getNombre().trim().equalsIgnoreCase(nombre.trim()))
+                return aux;
+        }
+        
+        return null;
+      
+    }
     
 }

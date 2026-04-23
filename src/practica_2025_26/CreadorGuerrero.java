@@ -14,6 +14,7 @@ public class CreadorGuerrero extends Creador{
     private double precio;
     
     private Agregado_Personajes a;
+    private Personaje p;
     
     public CreadorGuerrero(String n, int f)
     {
@@ -33,8 +34,8 @@ public class CreadorGuerrero extends Creador{
     
     @Override
     public Personaje factory_Method()
-    {
-        return new Guerrero(nombre, fuerza, nivel, armas, precio);
+    {   
+        return new Arquero(nombre, fuerza, nivel, armas, precio);
     } 
     
 }

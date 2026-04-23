@@ -16,4 +16,32 @@ public class Mago extends PersonajeBase {
         this.nivel_magia=nivel_magia;
         this.tipo="Mago";
     }
+
+    public int gethab() {
+        return nivel_magia;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+    
+    
+    public void sethab(int nivel_magia) {
+        this.nivel_magia = nivel_magia;
+    }
+    
+    
+    /*
+     * Implementacion del patron prototype
+     * Devuelve un nuevo mago con el mismo estado que el objeto actual.
+     */
+    public Personaje clonar() {
+        Personaje p = new Mago(getNombre(),gethab(),getNivel(), getArmas(), getPrecio());
+        
+        return p;
+    }
 }

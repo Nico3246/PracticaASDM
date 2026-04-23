@@ -14,6 +14,7 @@ public class CreadorMago extends Creador{
     private double precio;
     
     private Agregado_Personajes a;
+    private Personaje p;
     
     public CreadorMago (String n, int m)
     {
@@ -31,8 +32,8 @@ public class CreadorMago extends Creador{
     
     @Override
     public Personaje factory_Method()
-    {
-        return new Mago(nombre, nMagia, nivel, armas, precio);
+    {   
+        return new Arquero(nombre, nMagia, nivel, armas, precio);
     }
     
 }

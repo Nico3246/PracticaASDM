@@ -9,6 +9,7 @@ public abstract class PersonajeBase implements Personaje {
     protected String tipo;
     protected double precio;
 
+    
     public PersonajeBase(String nombre) 
     {
         this.nombre = nombre;
@@ -18,6 +19,7 @@ public abstract class PersonajeBase implements Personaje {
     }
     
     
+    
     public PersonajeBase(String nombre, int nivel,String armas, double precio)
     {
         this.nombre = nombre;
@@ -25,12 +27,37 @@ public abstract class PersonajeBase implements Personaje {
         this.armas=armas;
         this.precio=precio;
     }
-        
+
     
+    public String getArmas() {
+        return armas;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public double getPrecio() {
+        return precio;
+    } 
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+
+    public void setArmas(String armas) {
+        this.armas = armas;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
         
-        
-        
-        
+ 
 
     @Override
     public void subirNivel() {
