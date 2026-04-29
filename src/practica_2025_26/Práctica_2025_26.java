@@ -213,13 +213,34 @@ public class Práctica_2025_26 {
         System.out.print("Introduzca el nombre del personaje que desea clonar: ");
         String nombre = scanner2.nextLine();
   
-        Personaje original = personajes.existePersonaje(nombre);
         
-        if(original==null)
+        ArrayList<Personaje> listOriginal = personajes.existePersonaje(nombre);
+        Personaje original;
+       
+        
+        if(listOriginal.isEmpty())
         {
             System.out.println("El eprsonaje no existe");
             return;
         }
+        
+        if(listOriginal.size()>1)
+        {
+            System.out.println("Hay mas de un personaje con ese nombre: ");
+            for(int i=0; i<listOriginal.size();i++)
+            {
+                System.out.println(i + " Nombre: " + listOriginal.get(i).getNombre() + " | Nivel: " + listOriginal.get(i).getNivel() + 
+                        " | Tipo: " + listOriginal.get(i).getTipo() + "| Precio: " + listOriginal.get(i).getPrecio());
+            }
+            
+            System.out.print("\nSelecciona un personaje: ");
+            int opc = scanner.nextInt();
+            
+            original=listOriginal.get(opc);
+        }
+        else
+            original=listOriginal.getFirst();
+            
         
         System.out.print("Cuantos clones desea crear?: ");
         int n=scanner.nextInt();

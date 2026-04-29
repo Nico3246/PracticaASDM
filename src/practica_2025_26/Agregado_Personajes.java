@@ -17,19 +17,21 @@ public class Agregado_Personajes implements I_Agregado_Personajes{
     @Override
     public void recorrer(){
         for(int i=0;i<personajes.size();i++)
-            System.out.println(personajes.get(i).getNombre());
+            System.out.println(" | Nombre: " + personajes.get(i).getNombre() + " | Nivel " + personajes.get(i).getNivel() + " | Tipo: " + personajes.get(i).getTipo() + " | Precio: " + personajes.get(i).getPrecio());
     }
 
     @Override
-    public Personaje existePersonaje(String nombre) {
+    public ArrayList<Personaje> existePersonaje(String nombre) {
+        
+        ArrayList<Personaje> existePersonaje = new ArrayList<>();
         
         for(Personaje aux :personajes)
         {
             if(aux.getNombre().trim().equalsIgnoreCase(nombre.trim()))
-                return aux;
+                existePersonaje.add(aux);
         }
         
-        return null;
+        return existePersonaje;
       
     }
     
