@@ -1,6 +1,6 @@
 package practica_2025_26;
 
-public class Arquero extends PersonajeBase {
+public class Arquero extends PersonajeBase  {
     
     private int punteria;
     

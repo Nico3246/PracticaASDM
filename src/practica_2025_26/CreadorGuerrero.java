@@ -35,7 +35,7 @@ public class CreadorGuerrero extends Creador{
     @Override
     public Personaje factory_Method()
     {   
-        return new Arquero(nombre, fuerza, nivel, armas, precio);
+        return new Guerrero(nombre, fuerza, nivel, armas, precio);
     } 
     
 }

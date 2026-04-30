@@ -20,6 +20,8 @@ public interface Personaje {
     public String getArmas();
     public void setArmas(String armas);
     
+    public void mostrar();
+    
     public Personaje clonar();//metodo para aplicar el Prototype
     
 }

@@ -2,6 +2,7 @@ package practica_2025_26;
 
 import java.util.*;
 
+@SuppressWarnings("empty-statement")
 public class Práctica_2025_26 {
 
     private Scanner scanner = new Scanner(System.in);
@@ -54,8 +55,8 @@ public class Práctica_2025_26 {
 
             System.out.println("\nMenú Principal:");
             System.out.println("1. Crear personaje(Factory Method)");
-            System.out.println("2. Clonar personaje(futura)");
-            System.out.println("3. Subir nivel de personaje (futura)");
+            System.out.println("2. Clonar personaje(Prototype)");
+            System.out.println("3. Crear ejercito (Composite)");
             System.out.println("4. Listar personajes(futura)");
             System.out.println("5. Añade armas a personaje(futura)");
 
@@ -87,17 +88,20 @@ public class Práctica_2025_26 {
                  * de ese objeto mediante el metodo clonar()
                  */
                 case 2:
+                    
                     ClonarPersonaje(scanner, scanner2, personajes);
                     System.out.println("Presiona para continuar");
                     scanner2.nextLine();
                     break;
 
+                    
+                /*Patron utilizado: Composite
+                *permite crear un ejercito que puede estar formado por personajes u otros
+                *ejercitos
+                 */
                 case 3:
-                    System.out.println("Subiremos el nivel de uno de los personajes, tendremos que elegir "
-                            + "a uno de los añadidos por vosotros con anterioridad o de los ya existentes"
-                            + " inicialmente");
-                    System.out.println("Indicaremos al resto que se ha subido de nivel");
-                    System.out.println("Presiona para continuar");
+                    Ejercito ejercito = CrearEjercitos(scanner, scanner2, personajes);
+                    ejercito.mostrarEjercito();
                     scanner2.nextLine();
                     break;
 
@@ -283,4 +287,135 @@ public class Práctica_2025_26 {
 
         System.out.println("Se han creado " + n + " clones");  
     }
+    
+    
+    
+    /*Metodo unitilazo en el case 3, permite crear un ejercito.
+    *devuelve un ejercito para que pueda añadirse como hijo dentro de otro
+    */
+     public static Ejercito CrearEjercitos(Scanner scanner, Scanner scanner2, I_Agregado_Personajes personajes)
+     {
+        System.out.print("Introduce el nombre del ejercito:");
+        String nombreEjercito = scanner2.nextLine();
+         
+        Ejercito nuevo = new Ejercito(nombreEjercito);
+        int opc=0;
+        
+        do
+        {
+            System.out.println("1. Anadir un ejercito al ejercito");
+            System.out.println("2. Anadir miembros al ejercito");
+            System.out.println("3. Salir");
+            System.out.print("Selecciona una opcion: ");
+            opc=scanner.nextInt();
+            
+            switch (opc) {
+                case 1:
+                    Ejercito hijo = CrearEjercitos(scanner,scanner2,personajes);
+                    nuevo.agregaPersonaje(hijo);
+                    break;
+                case 2:
+                    anadirPersonajesEjercito(scanner, scanner2, personajes, nuevo);
+                    break;
+                case 3:
+                    System.out.println("Saliendo...");
+                    break;
+                default:
+                    System.out.println("Opcion no valida");
+                    break;
+                    
+            }    
+            
+        }while(opc!=3);
+        
+        return nuevo;
+    }
+     
+     
+     /*
+     metodo utilizado en el case 3 para añadir personajes a un ejercito
+     */
+    public static void anadirPersonajesEjercito(Scanner scanner, Scanner scanner2, I_Agregado_Personajes personajes, Ejercito ejercito)
+    {
+        Creador miFabricaObjetos;
+        Personaje p;
+        
+        System.out.println("Selecciona un personaje: ");
+        System.out.println("1.Arquero ");
+        System.out.println("2.Guerrero");
+        System.out.println("3.Mago");
+        int personaje = scanner.nextInt();
+        
+        System.out.print("Cuantos personajes desea crear?: ");
+        int n=scanner.nextInt();
+
+        System.out.print("Introduce el nombre: ");
+        String nombre = scanner2.nextLine();
+
+        System.out.print("Introduce el nivel: ");
+        int nivel = scanner.nextInt();
+
+        System.out.print("Introduce las armas: ");
+        String armas = scanner2.nextLine();
+
+        System.out.print("Introduce el precio: ");
+        double precio = scanner.nextInt();
+
+        switch (personaje) 
+        {
+            case 1:
+                int punteria;
+
+                System.out.print("Introduce la punteria: ");
+                punteria = scanner.nextInt();
+
+                miFabricaObjetos = new CreadorArquero(nombre, punteria, nivel, armas, precio);
+                p = miFabricaObjetos.factory_Method();
+
+                for(int i=0;i<n;i++)
+                {
+                    Personaje clon = p.clonar();
+                    personajes.agregar(clon);
+                    ejercito.agregaPersonaje(new MiembroEjercito(clon));
+                }
+                break;
+                
+            case 2:
+                int fuerza;
+                System.out.print("Introduce la fuerza: ");
+                fuerza = scanner.nextInt();
+
+                miFabricaObjetos = new CreadorGuerrero(nombre, fuerza, nivel, armas, precio);
+                p = miFabricaObjetos.factory_Method();
+
+                for(int i=0;i<n;i++)
+                {
+                    Personaje clon = p.clonar();
+                    personajes.agregar(clon);
+                    ejercito.agregaPersonaje(new MiembroEjercito(clon));
+                }
+
+                break;
+
+            case 3:
+                int nMagia;
+
+                System.out.print("Introduce el nivel de magia: ");
+                nMagia = scanner.nextInt();
+
+                miFabricaObjetos = new CreadorMago(nombre, nMagia, nivel, armas, precio);
+                p = miFabricaObjetos.factory_Method();
+
+                for(int i=0;i<n;i++)
+                {
+                    Personaje clon = p.clonar();
+                    personajes.agregar(clon);
+                    ejercito.agregaPersonaje(new MiembroEjercito(clon));
+                }
+
+                break;
+
+        }
+    }
+        
 }

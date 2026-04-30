@@ -33,7 +33,7 @@ public class CreadorMago extends Creador{
     @Override
     public Personaje factory_Method()
     {   
-        return new Arquero(nombre, nMagia, nivel, armas, precio);
+        return new Mago(nombre, nMagia, nivel, armas, precio);
     }
     
 }

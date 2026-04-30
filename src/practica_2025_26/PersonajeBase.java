@@ -64,16 +64,20 @@ public abstract class PersonajeBase implements Personaje {
         nivel++;
     }
 
+    @Override
      public String getNombre() {
         return nombre;
     }
 
+    @Override
     public int getNivel() {
         return nivel;
     }
 
+    @Override
     public void mostrar() {
-        System.out.println("Nombre: " + nombre + ", Nivel: " + nivel + ", Armas: " + armas);
+        System.out.println("Nombre: " + nombre + ", Nivel: " + nivel + ", Armas: " + armas + ", Tipo: " + tipo);
     }    
+   
 
 }
