@@ -17,6 +17,8 @@ public class Práctica_2025_26 {
         Creador miFabricaObjetos = null;
 
         I_Agregado_Personajes personajes = new Agregado_Personajes();
+        ArrayList<Ejercito> ejercitosCreados = new ArrayList<>();//aqui se almacenan los ejercitos que se vatan creando
+
 
         miFabricaObjetos = new CreadorGuerrero("Conan", 2);
         Personaje conan = miFabricaObjetos.factory_Method();
@@ -100,7 +102,7 @@ public class Práctica_2025_26 {
                 *ejercitos
                  */
                 case 3:
-                    Ejercito ejercito = CrearEjercitos(scanner, scanner2, personajes);
+                    Ejercito ejercito = CrearEjercitos(scanner, scanner2, personajes, ejercitosCreados);
                     ejercito.mostrarEjercito();
                     scanner2.nextLine();
                     break;
@@ -293,12 +295,21 @@ public class Práctica_2025_26 {
     /*Metodo unitilazo en el case 3, permite crear un ejercito.
     *devuelve un ejercito para que pueda añadirse como hijo dentro de otro
     */
-     public static Ejercito CrearEjercitos(Scanner scanner, Scanner scanner2, I_Agregado_Personajes personajes)
+     public static Ejercito CrearEjercitos(Scanner scanner, Scanner scanner2, I_Agregado_Personajes personajes, ArrayList<Ejercito> ejercitosCreados)
      {
         System.out.print("Introduce el nombre del ejercito:");
         String nombreEjercito = scanner2.nextLine();
-         
+        
+   
+        while(existeEjercito(ejercitosCreados, nombreEjercito))
+        {
+            System.out.println("Ya existe un ejercito con ese nombre");
+            System.out.print("Introduce el nombre del ejercito:");
+            nombreEjercito = scanner2.nextLine();
+        }
+        
         Ejercito nuevo = new Ejercito(nombreEjercito);
+        ejercitosCreados.add(nuevo);
         int opc=0;
         
         do
@@ -311,8 +322,37 @@ public class Práctica_2025_26 {
             
             switch (opc) {
                 case 1:
-                    Ejercito hijo = CrearEjercitos(scanner,scanner2,personajes);
-                    nuevo.agregaPersonaje(hijo);
+                    System.out.println("1- Crear un nuevo ejercito");
+                    System.out.println("2- Anadir un ejercito existente");
+                    System.out.println("3- Vovler");
+                    int opc2 = scanner.nextInt();
+                    switch (opc2) {
+                        case 1:
+                            Ejercito hijo = CrearEjercitos(scanner,scanner2,personajes, ejercitosCreados);
+                            nuevo.agregaPersonaje(hijo);
+                            System.out.println("Ejercito añadido");
+                            break;
+                            
+                        case 2:
+                            Ejercito hijo2 = SeleccionarEjercitoExistente(scanner, ejercitosCreados, nuevo);
+                            
+                            if(hijo2 != null)
+                            {
+                                nuevo.agregaPersonaje(hijo2);
+                                System.out.println("Ejercito añadido3");
+                            }
+
+                            break;
+                            
+                        case 3:
+                            System.out.println("Volivendo...");
+                            break;
+                        default:
+                            System.out.println("Opcion no valida");
+                            break;
+                    }
+                   
+                    
                     break;
                 case 2:
                     anadirPersonajesEjercito(scanner, scanner2, personajes, nuevo);
@@ -417,5 +457,56 @@ public class Práctica_2025_26 {
 
         }
     }
+    
+    
+    //se utiliza para realizar el case 3 muestra los ejercitos que ya se hanc reado previamente y permite añadirlos al ejercitos que se este creando
+    public static Ejercito SeleccionarEjercitoExistente(Scanner scanner, ArrayList<Ejercito> ejercitosCreados, Ejercito actual)
+    {
+        ArrayList<Ejercito>disponibles = new ArrayList<>();
         
+        for(Ejercito e: ejercitosCreados)
+        {
+            if(e != actual && !e.contieneEjercito(actual))//controlo que no se añada a si mismo
+            {
+                disponibles.add(e);
+            }
+        }
+        
+        if(disponibles.isEmpty())
+        {
+            System.out.println("No hay ejercitos disponibles para añadir");
+            return null;
+        }
+        
+        System.out.println("Ejercitos disponibles: ");
+        
+        for(int i=0; i<disponibles.size();i++)
+        {
+            System.out.println(i + "- " + disponibles.get(i).getNombreEjercito());
+        }
+        
+        System.out.println("Selecciona una opcion: ");
+        int opc = scanner.nextInt();
+        
+        return disponibles.get(opc);
+    }  
+
+
+    //se utiliza pra comprobar si ya existe un ejercitos creado previamente con el mismo nombre que el que se esta creando
+    public static boolean existeEjercito(ArrayList<Ejercito> ejercitosCreados, String nombre)
+    {
+        for(Ejercito e : ejercitosCreados)
+        {
+            if(e.getNombreEjercito().equalsIgnoreCase(nombre))
+            {
+                return true;
+            }    
+        }
+
+        return false;
+    }
+
 }
+
+
+

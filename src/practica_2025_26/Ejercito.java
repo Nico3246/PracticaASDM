@@ -20,6 +20,26 @@ public class Ejercito extends Componente {
     }
     
     
+    //se utiliza para comprpobar si alguno de los hijos del EJercito es el que se le pasa
+    public boolean contieneEjercito(Ejercito e)
+    {
+        if(this == e)
+            return true;
+        
+        for(Componente c : miembros)
+        {
+            if (c instanceof Ejercito)
+            {
+                Ejercito hijo = (Ejercito) c;
+                
+                if (hijo.contieneEjercito(e))
+                    return true;
+            }
+        }
+        
+        return false;
+    }
+    
     
     
     @Override
