@@ -76,7 +76,7 @@ public abstract class PersonajeBase implements Personaje {
 
     @Override
     public void mostrar() {
-        System.out.println("Nombre: " + nombre + ", Nivel: " + nivel + ", Armas: " + armas + ", Tipo: " + tipo);
+        System.out.println("Nombre: " + nombre + ", Nivel: " + nivel + ", Armas: " + armas + ", Tipo: " + tipo );
     }    
    
 

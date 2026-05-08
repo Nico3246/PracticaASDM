@@ -59,7 +59,7 @@ public class Práctica_2025_26 {
             System.out.println("1. Crear personaje(Factory Method)");
             System.out.println("2. Clonar personaje(Prototype)");
             System.out.println("3. Crear ejercito (Composite)");
-            System.out.println("4. Listar personajes(futura)");
+            System.out.println("4. Subir nivel (Iterator)");
             System.out.println("5. Añade armas a personaje(futura)");
 
             System.out.println("6. Salir");
@@ -108,10 +108,7 @@ public class Práctica_2025_26 {
                     break;
 
                 case 4:
-                    System.out.println("Se mostrarán los distintos personajes"
-                            + " se podrían incluir opociones de muestreo, ejemplo solo los "
-                            + "magos o por orden de mayor nivel, etc. "
-                            + "Con un par bastaría. ");
+                    subirNivel(scanner, scanner2, personajes);
                     System.out.println("Presiona para continuar");
                     scanner2.nextLine();
                     break;
@@ -505,8 +502,103 @@ public class Práctica_2025_26 {
 
         return false;
     }
+    
+    
+    
+    public static void subirNivel(Scanner scanner, Scanner scanner2, I_Agregado_Personajes personajes)
+    {
+        IteratorPersonajes iteradorMostrar = personajes.crearIterador();
+        
+        System.out.println("Personajes existentes");
+        System.out.println("-----------------------------------");
+        
+        while(iteradorMostrar.tieneSiguiente())
+        {
+            Personaje p= iteradorMostrar.siguiente();
+            p.mostrar();
+        }
+        
+        System.out.println("Introduce el nombre del personaje: ");
+        String nombre=scanner2.nextLine();
+        
+        ArrayList<Personaje> encontrados=new ArrayList<>();
+        
+        IteratorPersonajes iteradorBuscar = personajes.crearIterador();
+        
+        while(iteradorBuscar.tieneSiguiente())
+        {
+            Personaje p= iteradorBuscar.siguiente();
+            if(p.getNombre().equalsIgnoreCase(nombre))
+                encontrados.add(p);
+        }
+        
+        Personaje elegido=null;
+        
+        if(encontrados.isEmpty())
+        {
+            System.out.println("No existe ningun personaje con ese nombre");
+            return;
+        }
+        
+        if(encontrados.size()>1)
+        {
+            System.out.println("Hat varios personajes con ese nombre");
+            for(int i=0; i< encontrados.size(); i++)
+            {
+                Personaje p = encontrados.get(i);
+                
+                System.out.println(i + "- " + p.getNombre() + " | Nivel " + p.getNivel() + " | Tipo " + p.getTipo() + " | Armas: " + p.getArmas() + " | Precio: " + p.getPrecio());
+                
+                
+            }
+            
+            System.out.print("Elige una opcion: ");
+            int opc=scanner.nextInt();
 
+            elegido=encontrados.get(opc);
+        }
+        else
+            elegido=encontrados.get(0);
+        
+        if(elegido==null)
+        {
+            System.out.println("ERROR");
+            return;
+        }
+        
+        elegido.subirNivel();
+        
+        
+        IteratorPersonajes iteradorMostrar2 = personajes.crearIterador();
+        
+        System.out.println("Personajes actualizados");
+        System.out.println("-----------------------------------");
+        
+        while(iteradorMostrar2.tieneSiguiente())
+        {
+            Personaje p= iteradorMostrar2.siguiente();
+            p.mostrar();
+        }
+        
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
+
 
 
 

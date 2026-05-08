@@ -2,6 +2,7 @@ package practica_2025_26;
 
 import java.util.ArrayList;
 
+//actua como el agregadoConcreto en el patron Iterator
 public class Agregado_Personajes implements I_Agregado_Personajes{
         private ArrayList<Personaje> personajes;
         
@@ -33,6 +34,11 @@ public class Agregado_Personajes implements I_Agregado_Personajes{
         
         return existePersonaje;
       
+    }
+
+    @Override
+    public IteratorPersonajes crearIterador() {
+        return new IteratorPersonajesConcreto(personajes);
     }
     
 }
