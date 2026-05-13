@@ -507,7 +507,7 @@ public class Práctica_2025_26 {
     
     public static void subirNivel(Scanner scanner, Scanner scanner2, I_Agregado_Personajes personajes)
     {
-        IteratorPersonajes iteradorMostrar = personajes.crearIterador();
+        IteratorPersonajes iteradorMostrar = personajes.crearIterador2();
         
         System.out.println("Personajes existentes");
         System.out.println("-----------------------------------");

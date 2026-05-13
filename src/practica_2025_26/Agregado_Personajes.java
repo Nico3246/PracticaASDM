@@ -40,5 +40,10 @@ public class Agregado_Personajes implements I_Agregado_Personajes{
     public IteratorPersonajes crearIterador() {
         return new IteratorPersonajesConcreto(personajes);
     }
+
+    @Override
+    public IteratorPersonajes crearIterador2() {
+        return new IteradorPersonajesConcreto2(personajes);
+    }
     
 }
