@@ -60,7 +60,7 @@ public class Práctica_2025_26 {
             System.out.println("2. Clonar personaje(Prototype)");
             System.out.println("3. Crear ejercito (Composite)");
             System.out.println("4. Subir nivel (Iterator)");
-            System.out.println("5. Añade armas a personaje(futura)");
+            System.out.println("5. Listar personaje (Iterator)");
 
             System.out.println("6. Salir");
             System.out.print("Elige una opción: ");
@@ -113,9 +113,7 @@ public class Práctica_2025_26 {
                     scanner2.nextLine();
                     break;
                 case 5:
-                    System.out.println("Se añadirán armas a alguno de "
-                            + "los personajes existentes añadiéndolas "
-                            + "al String armas que tiene cada personaje ");
+                    listarPersonajes( scanner,  scanner2,  personajes);
                     System.out.println("Presiona para continuar");
                     scanner2.nextLine();
                     break;
@@ -583,8 +581,295 @@ public class Práctica_2025_26 {
     }
 
     
+    public static void listarPersonajes(Scanner scanner, Scanner scanner2, I_Agregado_Personajes personajes)
+    {
+        System.out.println("Filtros");
+        System.out.println("------------------------------------");
+        System.out.println("1. Mostrar todos los personajes");
+        System.out.println("2. Filtrar por tipo");
+        System.out.println("3. Filtrar por nivel minimo");
+        System.out.println("4. Filtrar por rango de nivel");
+        System.out.println("5. Filtrar por precio maximo");
+        System.out.println("6. Filtrar por arma");
+        System.out.println("7. Filtrar por habilidad minima");
+        System.out.println("8. Buscar por nombre");
+        System.out.println("9. Mostrar ordenado");
+        System.out.println("10. salir");
+        
+        int opc = scanner.nextInt();
+        
+        switch (opc) {
+            case 1:
+                mostrarPersonajes(personajes);
+                break;
+            case 2:
+                filtroTipo( scanner2,  personajes);
+                break;
+            case 3:
+                filtroNivelMinimo( scanner,  personajes);
+                break;
+            case 4: 
+                filtroRangoNivel( scanner,  personajes);
+                break;
+            case 5: 
+                filtroPrecio( scanner,  personajes);
+                break;
+            case 6:
+                filtroArmas( scanner2,  personajes);
+                break;
+            case 7:
+                filtroNivelHabilidad( scanner,  personajes);
+                break;
+            case 8:
+                filtroNombre( scanner2,  personajes);
+                break;
+            case 9:
+                mostrarOrdenado( scanner,  personajes);
+                break;
+            case 10:
+                System.out.println("Volivendo...");
+                break;
+            default:
+                System.out.println("Opcion no valida");
+                break;
+        }
+
+    }
     
     
+    public static void mostrarPersonajes(I_Agregado_Personajes personajes)
+    {
+        IteratorPersonajes iterador = personajes.crearIterador();
+        boolean encontrado=false;
+        System.out.println("Personajes existentes");
+        System.out.println("-----------------------------------");
+
+        while(iterador.tieneSiguiente())
+        {
+            Personaje p= iterador.siguiente();
+            p.mostrar();
+            encontrado=true;
+        }
+        
+        if(!encontrado)
+            System.out.println("No hay personajes");
+    }
+    
+    public static void filtroTipo(Scanner scanner2, I_Agregado_Personajes personajes)
+    {
+        System.out.print("Introduce el tipo de personaje (Arquero, mago, geuerrero: ");
+        String tipo=scanner2.nextLine();
+        
+        IteratorPersonajes iterador = personajes.crearIterador();
+        boolean encontrado=false;
+        
+        while(iterador.tieneSiguiente())
+        {
+            Personaje p= iterador.siguiente();
+            
+            if(p.getTipo().equalsIgnoreCase(tipo))
+            {
+                p.mostrar();
+            encontrado=true;
+            }
+        }
+        
+        if(!encontrado)
+            System.out.println("No hay personajes");
+    }
+    
+    
+    public static void filtroNivelMinimo(Scanner scanner, I_Agregado_Personajes personajes)
+    {
+        System.out.print("Introduce el nivel minimo: ");
+        int nivel=scanner.nextInt();
+        
+        IteratorPersonajes iterador = personajes.crearIterador();
+        boolean encontrado=false;
+        
+        while(iterador.tieneSiguiente())
+        {
+            Personaje p= iterador.siguiente();
+            
+            if(p.getNivel() >= nivel)
+            {
+                p.mostrar();
+                encontrado=true;
+            }
+        }
+        
+        if(!encontrado)
+            System.out.println("No hay personajes");
+    }
+    
+    public static void filtroRangoNivel(Scanner scanner, I_Agregado_Personajes personajes)
+    {
+        System.out.print("Introduce el nivel minimo: ");
+        int nivel=scanner.nextInt();
+        
+        System.out.print("Introduce el nivel maximo: ");
+        int nivel2=scanner.nextInt();
+        
+        IteratorPersonajes iterador = personajes.crearIterador();
+        boolean encontrado=false;
+        
+        while(iterador.tieneSiguiente())
+        {
+            Personaje p= iterador.siguiente();
+            
+            if(p.getNivel() >= nivel && p.getNivel()<= nivel2)
+            {
+                p.mostrar();
+                encontrado=true;
+            }
+        }
+        
+        if(!encontrado)
+            System.out.println("No hay personajes");
+        
+    }
+    
+    
+    public static void filtroPrecio(Scanner scanner, I_Agregado_Personajes personajes)
+    {
+        System.out.print("Introduce el precio maximo: ");
+        int precio=scanner.nextInt();
+       
+        
+        IteratorPersonajes iterador = personajes.crearIterador();
+        boolean encontrado=false;
+        
+        while(iterador.tieneSiguiente())
+        {
+            Personaje p= iterador.siguiente();
+            
+            if(p.getPrecio() <= precio)
+            {
+                p.mostrar();
+                encontrado=true;
+            }
+        }
+        
+        if(!encontrado)
+            System.out.println("No hay personajes");
+        
+    }
+    
+    
+    public static void filtroArmas(Scanner scanner2, I_Agregado_Personajes personajes)
+    {
+        System.out.print("Introduce el arma: ");
+        String arma=scanner2.nextLine();
+       
+        
+        IteratorPersonajes iterador = personajes.crearIterador();
+        boolean encontrado=false;
+        
+        while(iterador.tieneSiguiente())
+        {
+            Personaje p= iterador.siguiente();
+            
+            if(arma != null && p.getArmas().contains(arma))
+            {
+                p.mostrar();
+                encontrado=true;
+            }
+        }
+        
+        if(!encontrado)
+            System.out.println("No hay personajes");
+        
+    }
+    
+    public static void filtroNivelHabilidad(Scanner scanner, I_Agregado_Personajes personajes)
+    {
+        System.out.print("Introduce el nivel minimo de habilidad: ");
+        int nivelH=scanner.nextInt();
+       
+        
+        IteratorPersonajes iterador = personajes.crearIterador();
+        boolean encontrado=false;
+        
+        while(iterador.tieneSiguiente())
+        {
+            Personaje p= iterador.siguiente();
+            
+            if(p.gethab()<= nivelH)
+            {
+                p.mostrar();
+                encontrado=true;
+            }
+        }
+        
+        if(!encontrado)
+            System.out.println("No hay personajes");
+        
+    }
+    
+    
+    public static void filtroNombre(Scanner scanner2, I_Agregado_Personajes personajes)
+    {
+        System.out.print("Introduce el nombre: ");
+        String nombre=scanner2.nextLine();
+       
+        
+        IteratorPersonajes iterador = personajes.crearIterador();
+        boolean encontrado=false;
+        
+        while(iterador.tieneSiguiente())
+        {
+            Personaje p= iterador.siguiente();
+            
+            if(p.getNombre().equalsIgnoreCase(nombre))
+            {
+                p.mostrar();
+                encontrado=true;
+            }
+        }
+        
+        if(!encontrado)
+            System.out.println("No hay personajes");
+    }
+    
+    
+    public static void mostrarOrdenado(Scanner scanner, I_Agregado_Personajes personajes)
+    {
+        System.out.println("Ordenar por: ");
+        System.out.println("1. Nivel");
+        System.out.println("2. Precio");
+        System.out.println("Seleccion una opcion: ");
+        int opc1=scanner.nextInt();
+        
+        System.out.println("Orden: ");
+        System.out.println("1. Ascendente");
+        System.out.println("2. Descendente");
+        System.out.println("Selecciona una opcion: ");
+        int opc2=scanner.nextInt();
+        
+        IteratorPersonajes iterador;
+        
+        if(opc2 == 1)
+            iterador = personajes.crearIterador3(opc1);
+        else
+            iterador = personajes.crearIterador4(opc1);
+        
+        boolean encontrado=false;
+        
+        while(iterador.tieneSiguiente())
+        {
+            Personaje p = iterador.siguiente();
+            p.mostrar();
+            encontrado=true;
+        }
+        
+        if(!encontrado)
+            System.out.println("No hay personajes");
+    }
+    
+    
+    
+    
+            
     
     
     

@@ -37,13 +37,25 @@ public class Agregado_Personajes implements I_Agregado_Personajes{
     }
 
     @Override
-    public IteratorPersonajes crearIterador() {
+    public IteratorPersonajes crearIterador() {//recorre como cola
         return new IteratorPersonajesConcreto(personajes);
     }
 
     @Override
-    public IteratorPersonajes crearIterador2() {
+    public IteratorPersonajes crearIterador2() {//recorre como pila
         return new IteradorPersonajesConcreto2(personajes);
     }
+
+    @Override
+    public IteratorPersonajes crearIterador3(int tipoOrden) {//recorre ordenado ascendentemente
+        return new IteradorPersonajesConcreto3(personajes, tipoOrden);
+    }
+
+    @Override
+    public IteratorPersonajes crearIterador4(int tipoOrden) {//recorre ordenando descendetemente
+        return new IteradorPersonajesConcreto4(personajes, tipoOrden);
+    }
+    
+    
     
 }
