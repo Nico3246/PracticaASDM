@@ -3,11 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class PersonajeBase implements Personaje {
-    protected String nombre;
-    protected int nivel;
-    protected String armas;
+    protected String nombre="Sin nombre";
+    protected int nivel=1;
+    protected String armas="Hacha de piedra";
     protected String tipo;
-    protected double precio;
+    protected double precio=1;
 
     
     public PersonajeBase(String nombre) 
@@ -22,10 +22,14 @@ public abstract class PersonajeBase implements Personaje {
     
     public PersonajeBase(String nombre, int nivel,String armas, double precio)
     {
-        this.nombre = nombre;
-        this.nivel = nivel;
-        this.armas=armas;
-        this.precio=precio;
+        if(nombre!=null)
+            this.nombre = nombre;
+        if(nivel!=0)
+            this.nivel = nivel;
+        if(armas!=null)
+            this.armas=armas;
+        if(precio!=0)
+            this.precio=precio;
     }
 
     
