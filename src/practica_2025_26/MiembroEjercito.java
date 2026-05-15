@@ -12,6 +12,10 @@ public class MiembroEjercito extends Componente{
     public MiembroEjercito(Personaje personaje) {
         this.personaje = personaje;
     }
+
+    public Personaje getPersonaje() {
+        return personaje;
+    }
     
     
 

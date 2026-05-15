@@ -1,5 +1,6 @@
 package practica_2025_26;
 
+import java.awt.BorderLayout;
 import java.util.*;
 
 @SuppressWarnings("empty-statement")
@@ -59,8 +60,9 @@ public class Práctica_2025_26 {
             System.out.println("1. Crear personaje(Factory Method)");
             System.out.println("2. Clonar personaje(Prototype)");
             System.out.println("3. Crear ejercito (Composite)");
-            System.out.println("4. Subir nivel (Iterator)");
+            System.out.println("4. Muerte personaje (Observer");
             System.out.println("5. Listar personaje (Iterator)");
+            System.out.println("6. Subir nivel (Iterator)");
 
             System.out.println("6. Salir");
             System.out.print("Elige una opción: ");
@@ -108,7 +110,7 @@ public class Práctica_2025_26 {
                     break;
 
                 case 4:
-                    subirNivel(scanner, scanner2, personajes);
+                    muertePersonaje(scanner, scanner2, personajes, ejercitosCreados);
                     System.out.println("Presiona para continuar");
                     scanner2.nextLine();
                     break;
@@ -118,6 +120,7 @@ public class Práctica_2025_26 {
                     scanner2.nextLine();
                     break;
                 case 6:
+                    subirNivel(scanner, scanner2, personajes);
                     System.out.println("Saliendo del programa...");
                     System.out.println("Presina para continuar");
                     scanner2.nextLine();
@@ -583,57 +586,62 @@ public class Práctica_2025_26 {
     
     public static void listarPersonajes(Scanner scanner, Scanner scanner2, I_Agregado_Personajes personajes)
     {
-        System.out.println("Filtros");
-        System.out.println("------------------------------------");
-        System.out.println("1. Mostrar todos los personajes");
-        System.out.println("2. Filtrar por tipo");
-        System.out.println("3. Filtrar por nivel minimo");
-        System.out.println("4. Filtrar por rango de nivel");
-        System.out.println("5. Filtrar por precio maximo");
-        System.out.println("6. Filtrar por arma");
-        System.out.println("7. Filtrar por habilidad minima");
-        System.out.println("8. Buscar por nombre");
-        System.out.println("9. Mostrar ordenado");
-        System.out.println("10. salir");
-        
-        int opc = scanner.nextInt();
-        
-        switch (opc) {
-            case 1:
-                mostrarPersonajes(personajes);
-                break;
-            case 2:
-                filtroTipo( scanner2,  personajes);
-                break;
-            case 3:
-                filtroNivelMinimo( scanner,  personajes);
-                break;
-            case 4: 
-                filtroRangoNivel( scanner,  personajes);
-                break;
-            case 5: 
-                filtroPrecio( scanner,  personajes);
-                break;
-            case 6:
-                filtroArmas( scanner2,  personajes);
-                break;
-            case 7:
-                filtroNivelHabilidad( scanner,  personajes);
-                break;
-            case 8:
-                filtroNombre( scanner2,  personajes);
-                break;
-            case 9:
-                mostrarOrdenado( scanner,  personajes);
-                break;
-            case 10:
-                System.out.println("Volivendo...");
-                break;
-            default:
-                System.out.println("Opcion no valida");
-                break;
-        }
+        int opc=0;
+        do
+        { 
+            System.out.println("Filtros");
+            System.out.println("------------------------------------");
+            System.out.println("1. Mostrar todos los personajes");
+            System.out.println("2. Filtrar por tipo");
+            System.out.println("3. Filtrar por nivel minimo");
+            System.out.println("4. Filtrar por rango de nivel");
+            System.out.println("5. Filtrar por precio maximo");
+            System.out.println("6. Filtrar por arma");
+            System.out.println("7. Filtrar por habilidad minima");
+            System.out.println("8. Buscar por nombre");
+            System.out.println("9. Mostrar ordenado");
+            System.out.println("10. salir");
 
+            opc = scanner.nextInt();
+
+            switch (opc) {
+                case 1:
+                    mostrarPersonajes(personajes);
+                    break;
+                case 2:
+                    filtroTipo( scanner2,  personajes);
+                    break;
+                case 3:
+                    filtroNivelMinimo( scanner,  personajes);
+                    break;
+                case 4: 
+                    filtroRangoNivel( scanner,  personajes);
+                    break;
+                case 5: 
+                    filtroPrecio( scanner,  personajes);
+                    break;
+                case 6:
+                    filtroArmas( scanner2,  personajes);
+                    break;
+                case 7:
+                    filtroNivelHabilidad( scanner,  personajes);
+                    break;
+                case 8:
+                    filtroNombre( scanner2,  personajes);
+                    break;
+                case 9:
+                    mostrarOrdenado( scanner,  personajes);
+                    break;
+                case 10:
+                    System.out.println("Volivendo...");
+                    break;
+                default:
+                    System.out.println("Opcion no valida");
+                    break;
+            }
+        
+        }while(opc!=10);
+        
     }
     
     
@@ -867,6 +875,58 @@ public class Práctica_2025_26 {
     }
     
     
+    public static void muertePersonaje(Scanner scanner, Scanner scanner2, I_Agregado_Personajes personajes, ArrayList<Ejercito> ejercitosCreados)
+    {
+        if(personajes.getNumPersonajes()==0)
+        {
+            System.out.println("No hay personajes existente");
+            return;
+        }
+        
+        IteratorPersonajes iterador = personajes.crearIterador();
+        
+        Random r=new Random();
+        int num=r.nextInt(personajes.getNumPersonajes());
+        
+        for(int i=0; i < num && iterador.tieneSiguiente() ;i++)
+        {
+            
+            iterador.siguiente();
+        }
+        
+        Personaje muerto=iterador.siguiente();
+
+        Ejercito ejercitoMuerto = null;
+        
+        for (Ejercito e : ejercitosCreados) {
+            if (e.pertenece(muerto)) {
+               ejercitoMuerto = e;
+            }
+        }
+        
+        System.out.println("Notificar solo a los miembros de su ejercito? S/N");
+        String opc=scanner2.nextLine();
+        
+        personajes.eliminar(muerto);
+        
+        if(ejercitoMuerto!= null)
+        {
+            ejercitoMuerto.eliminarMiembro(muerto);
+        }
+        
+        if(opc.equalsIgnoreCase("s"))
+        {
+            if(ejercitoMuerto==null)
+                System.out.println("El personaje no pertenece a ningun ejercito");
+            
+            else
+                personajes.notificarObservadores(muerto,ejercitoMuerto); 
+        }
+        else
+            personajes.notificarObservadores(muerto);
+        
+        
+    }
     
     
             

@@ -4,15 +4,32 @@ import java.util.ArrayList;
 
 //actua como el agregadoConcreto en el patron Iterator
 public class Agregado_Personajes implements I_Agregado_Personajes{
-        private ArrayList<Personaje> personajes;
+    private ArrayList<Personaje> personajes;
+    private ArrayList<Personaje> observadores;
+    
+    Agregado_Personajes(){
+        personajes = new ArrayList<>();
+        observadores = new ArrayList<Personaje>();
+    }
         
-        Agregado_Personajes(){
-            personajes = new ArrayList<>();
-        }
+    
+    public int getNumPersonajes()
+    {
+        return personajes.size();
+    }
         
     @Override
     public void agregar(Personaje personaje) {
         personajes.add(personaje);
+        agregarObservador(personaje);
+    }
+    
+    
+    @Override
+    public void eliminar(Personaje p)
+    {
+        personajes.remove(p);
+        eliminarObservador(p);
     }
      
     @Override
@@ -55,7 +72,48 @@ public class Agregado_Personajes implements I_Agregado_Personajes{
     public IteratorPersonajes crearIterador4(int tipoOrden) {//recorre ordenando descendetemente
         return new IteradorPersonajesConcreto4(personajes, tipoOrden);
     }
+
+    @Override
+    public void agregarObservador(Personaje observador) {
+        observadores.add(observador);
+    }
+
+    @Override
+    public void eliminarObservador(Personaje observador) {
+        observadores.remove(observador);
+    }
+
+    @Override
+    public void notificarObservadores(Personaje p) {
+        for(Personaje o:observadores){
+            if(o!= p)
+                o.actualizar(p,null);
+        }
+    }
+
+    @Override
+    public void notificarObservadores(Personaje p, Ejercito e) {
+        for(Personaje o:observadores){
+            if(e.pertenece(o) && o!= p)
+            {    
+                o.actualizar(p,e.getNombreEjercito());
+            }
+        }
+    }
+
+    @Override
+    public void muerePersonaje(Personaje p, Ejercito e) {
+        
+        System.out.println("Se ha muerto " + p.getNombre());
+        
+        if(e!=null)
+            notificarObservadores(p,e);
+        else
+            notificarObservadores(p);
+    }
+
     
-    
+   
+
     
 }

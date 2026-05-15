@@ -42,4 +42,6 @@ public class Guerrero extends PersonajeBase {
         
         return p;
     }
+
+    
 }

@@ -85,6 +85,19 @@ public abstract class PersonajeBase implements Personaje {
     public void mostrar() {
         System.out.println("Nombre: " + nombre + ", Nivel: " + nivel + ", Armas: " + armas + ", Tipo: " + tipo + ", Habilidad: " + gethab() + " Precio: " + getPrecio());
     }    
+    
+    
+    @Override
+    public void actualizar(Personaje fallecido, String nombreEjercito) {
+        if (nombreEjercito == null || nombreEjercito.trim().isEmpty()) 
+        {
+            System.out.println(nombre + " recibe el mensaje: " + fallecido.getNombre() + fallecido.getTipo() +" ha fallecido en combate.");
+        } 
+        else 
+        {
+            System.out.println(nombre + " del ejercito " + nombreEjercito + " recibe el mensaje: " + fallecido.getNombre() + fallecido.getTipo() +" ha fallecido en combate.");
+        }
+    }
    
 
 }

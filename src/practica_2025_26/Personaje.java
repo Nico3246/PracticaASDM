@@ -24,4 +24,7 @@ public interface Personaje {
     
     public Personaje clonar();//metodo para aplicar el Prototype
     
+    // Observer: el personaje recibe la noticia de una muerte
+    public void actualizar(Personaje fallecido, String nombreEjercito);
+    
 }

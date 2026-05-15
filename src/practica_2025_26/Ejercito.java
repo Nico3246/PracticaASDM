@@ -60,4 +60,61 @@ public class Ejercito extends Componente {
             c.mostrarEjercito();
     }
     
+    public boolean pertenece(Personaje p)
+    {
+        for (Componente c : miembros) 
+        {
+            if (c instanceof MiembroEjercito) 
+            {
+                MiembroEjercito miembro = (MiembroEjercito) c;
+
+                if (miembro.getPersonaje() == p) 
+                    return true;
+            }
+
+            if (c instanceof Ejercito) 
+            {
+                Ejercito hijo = (Ejercito) c;
+
+                if (hijo.pertenece(p))
+                    return true;
+                
+            }
+        }
+        
+        return false;
+    }
+    
+    
+    public boolean eliminarMiembro(Personaje p)
+    {
+        boolean eliminado=false;
+        
+        for(int i=0; i<miembros.size();i++)
+        {
+            Componente c = miembros.get(i);
+            
+            if(c instanceof MiembroEjercito)
+            {
+                MiembroEjercito miembro = (MiembroEjercito) c;
+                
+                if(miembro.getPersonaje() == p)
+                {
+                    miembros.remove(i);
+                    eliminado = true;
+                }
+            }
+            
+            if(c instanceof Ejercito)
+            {
+                Ejercito hijo = (Ejercito) c;
+                
+                if(hijo.eliminarMiembro(p))
+                    eliminado=true;
+            }
+        }
+        
+        return eliminado;
+    }
+    
 }

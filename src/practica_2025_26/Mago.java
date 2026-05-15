@@ -44,4 +44,6 @@ public class Mago extends PersonajeBase {
         
         return p;
     }
+    
+    
 }
