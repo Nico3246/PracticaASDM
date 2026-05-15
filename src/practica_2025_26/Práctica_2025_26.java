@@ -64,7 +64,7 @@ public class Práctica_2025_26 {
             System.out.println("5. Listar personaje (Iterator)");
             System.out.println("6. Subir nivel (Iterator)");
 
-            System.out.println("6. Salir");
+            System.out.println("7. Salir");
             System.out.print("Elige una opción: ");
             opcion = scanner.nextInt();
 
@@ -131,7 +131,7 @@ public class Práctica_2025_26 {
                     scanner2.nextLine();
             }
 
-        } while (opcion != 6);
+        } while (opcion != 7);
     }
 
     /*Metodo utilizado en el case 1 para crear los personajes
