@@ -30,7 +30,7 @@ public class Arquero extends PersonajeBase  {
 
    
     public void sethab(int hab) {
-        this.punteria = punteria;
+        this.punteria = hab;
     }
     
     
