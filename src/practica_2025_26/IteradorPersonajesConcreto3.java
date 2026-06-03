@@ -1,15 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package practica_2025_26;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Nicolás
- */
+
 
 //este iterador recorre la lista en un orden ascendente determinado segun el tipo que se le pase
 public class IteradorPersonajesConcreto3 implements IteratorPersonajes{

@@ -1,16 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package practica_2025_26;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- *
- * @author Nicolás
- */
 public class PatronDecorator {
     
     private Scanner scanner;
@@ -96,7 +89,7 @@ public class PatronDecorator {
         personajes.eliminar(copia);
         personajes.agregar(original);
         
-        System.out.println("Armas: " + copia.getArmas());
+        System.out.println("Armas: " + original.getArmas());
     }
     
 }
